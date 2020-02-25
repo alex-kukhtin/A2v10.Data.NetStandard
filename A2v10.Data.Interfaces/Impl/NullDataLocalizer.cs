@@ -4,8 +4,11 @@ using System;
 
 namespace A2v10.Data.Interfaces
 {
-	public interface IDataConfiguration
+	public class NullDataLocalizer : IDataLocalizer
 	{
-		String ConnectionString(String source);
+		public String Localize(String content)
+		{
+			return content;
+		}
 	}
 }

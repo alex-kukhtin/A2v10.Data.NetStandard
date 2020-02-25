@@ -256,7 +256,7 @@ namespace A2v10.Data.Tests.Expressions
 		}
 
 		[TestMethod]
-		public async Task DataModelExpressions()
+		public Task DataModelExpressions()
 		{
 			/*
 			var dm = await _dbContext.LoadModelAsync(null, "a2test.[SimpleModel.Load]");
@@ -279,6 +279,7 @@ namespace A2v10.Data.Tests.Expressions
 			objResult = dm.CalcExpression<Object>("Model.Name + ` @_$ 5`");
 			Assert.AreEqual("ObjectName @_$ 5", objResult);
 			*/
+			return Task.CompletedTask;
 		}
 	}
 }

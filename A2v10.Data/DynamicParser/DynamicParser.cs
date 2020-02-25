@@ -308,19 +308,14 @@ namespace A2v10.Data.DynamicExpression
 
 		Expression ParsePrimaryStart()
 		{
-			switch (token.id)
+			return token.id switch
 			{
-				case TokenId.Identifier:
-					return ParseIdentifier();
-				case TokenId.StringLiteral:
-					return ParseStringLiteral();
-				case TokenId.NumberLiteral:
-					return ParseNumberLiteral();
-				case TokenId.OpenParen:
-					return ParseParenExpression();
-				default:
-					return ParseUnary();
-			}
+				TokenId.Identifier => ParseIdentifier(),
+				TokenId.StringLiteral => ParseStringLiteral(),
+				TokenId.NumberLiteral => ParseNumberLiteral(),
+				TokenId.OpenParen => ParseParenExpression(),
+				_ => ParseUnary(),
+			};
 		}
 
 		Expression ParseStringLiteral()
