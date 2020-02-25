@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A2v10.Data", "A2v10.Data\A2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A2v10.Data.Interfaces", "A2v10.Data.Interfaces\A2v10.Data.Interfaces.csproj", "{53E38F0A-D93A-4190-9339-128658D02A7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A2v10.Data.Tests", "A2v10.Data.Tests\A2v10.Data.Tests.csproj", "{BFE5487F-CC14-4BD2-8DA6-F9A89641AD9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{53E38F0A-D93A-4190-9339-128658D02A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53E38F0A-D93A-4190-9339-128658D02A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53E38F0A-D93A-4190-9339-128658D02A7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE5487F-CC14-4BD2-8DA6-F9A89641AD9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE5487F-CC14-4BD2-8DA6-F9A89641AD9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE5487F-CC14-4BD2-8DA6-F9A89641AD9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE5487F-CC14-4BD2-8DA6-F9A89641AD9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

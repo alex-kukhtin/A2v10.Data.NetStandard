@@ -48,10 +48,12 @@ namespace A2v10.Data.DynamicExpression
 				var d2 = Object2Number(elem2);
 				return d1 - d2;
 			}
+#pragma warning disable CA1031 // Do not catch general exception types
 			catch (InvalidCastException /*ex*/)
 			{
 				return NaN.Value;
 			}
+#pragma warning restore CA1031 // Do not catch general exception types
 		}
 
 		public static Object MultiplyOperation(Object elem1, Object elem2)

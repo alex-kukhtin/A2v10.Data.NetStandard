@@ -16,7 +16,7 @@ namespace A2v10.Data
 		public Boolean IsComplexField { get; }
 		public Boolean IsLazy { get; }
 		public Boolean IsMain { get; set; }
-		public String[] MapFields { get; }
+		public List<String> MapFields { get; }
 
 		public FieldInfo(String name)
 		{
@@ -47,7 +47,7 @@ namespace A2v10.Data
 			if (x.Length == 4)
 			{
 				FieldType = FieldType.MapObject;
-				MapFields = x[3].Split(':');
+				MapFields = x[3].Split(':').ToList();
 			}
 			IsComplexField = PropertyName.Contains('.');
 			CheckReservedWords();
@@ -162,6 +162,26 @@ namespace A2v10.Data
 		{
 			if (String.IsNullOrEmpty(PropertyName))
 				PropertyName = "__permissions";
+		}
+
+		public override Boolean Equals(Object obj)
+		{
+			throw new NotImplementedException();
+		}
+
+		public override Int32 GetHashCode()
+		{
+			throw new NotImplementedException();
+		}
+
+		public static Boolean operator ==(FieldInfo left, FieldInfo right)
+		{
+			return left.Equals(right);
+		}
+
+		public static Boolean operator !=(FieldInfo left, FieldInfo right)
+		{
+			return !(left == right);
 		}
 	}
 }
