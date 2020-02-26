@@ -76,9 +76,8 @@ namespace A2v10.Data
 			SetReturnParamResult(retParam, element);
 		}
 
-		public async Task<IList<ExpandoObject>> ReadExpandoAsync(String source, String command, ExpandoObject prms)
+		public async Task<ExpandoObject> ReadExpandoAsync(String source, String command, ExpandoObject prms)
 		{
-			var list = new List<ExpandoObject>();
 			using var p = _profiler.Start(command);
 			using var cnn = await GetConnectionAsync(source);
 			using var cmd = cnn.CreateCommandSP(command);
@@ -86,17 +85,17 @@ namespace A2v10.Data
 			var retParam = SetParametersFromExpandoObject(cmd, prms);
 			using (var rdr = await cmd.ExecuteReaderAsync())
 			{
-				while (rdr.Read())
+				if (rdr.Read())
 				{
 					var eo = new ExpandoObject();
 					for (Int32 i = 0; i < rdr.FieldCount; i++)
 					{
 						eo.SetNotNull(rdr.GetName(i), rdr.GetValue(i));
 					}
-					list.Add(eo);
+					return eo;
 				}
 			}
-			return list;
+			return null;
 		}
 
 
@@ -413,6 +412,8 @@ namespace A2v10.Data
 
 		SqlParameter SetParametersFromExpandoObject(SqlCommand cmd, ExpandoObject element)
 		{
+			if (element == null)
+				return null;
 			var elem = element as IDictionary<String, Object>;
 			SqlCommandBuilder.DeriveParameters(cmd);
 			var sqlParams = cmd.Parameters;
