@@ -90,7 +90,7 @@ namespace A2v10.Data
 					var eo = new ExpandoObject();
 					for (Int32 i = 0; i < rdr.FieldCount; i++)
 					{
-						eo.SetNotNull(rdr.GetName(i), rdr.GetValue(i));
+						eo.Set(rdr.GetName(i), rdr.IsDBNull(i) ? null : rdr.GetValue(i));
 					}
 					return eo;
 				}
