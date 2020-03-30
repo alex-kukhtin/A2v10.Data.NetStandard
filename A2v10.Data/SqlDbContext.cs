@@ -37,7 +37,7 @@ namespace A2v10.Data
 				throw new ArgumentNullException(nameof(localizer));
 		}
 
-		Int32 CommandTimeout => _config.CommandTimeout;
+		Int32 CommandTimeout => (Int32) _config.CommandTimeout.TotalSeconds;
 
 		#region IDbContext
 		public String ConnectionString(String source)
