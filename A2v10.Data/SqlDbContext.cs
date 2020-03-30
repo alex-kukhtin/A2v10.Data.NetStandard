@@ -37,6 +37,8 @@ namespace A2v10.Data
 				throw new ArgumentNullException(nameof(localizer));
 		}
 
+		Int32 CommandTimeout => _config.CommandTimeout;
+
 		#region IDbContext
 		public String ConnectionString(String source)
 		{
@@ -47,7 +49,7 @@ namespace A2v10.Data
 		{
 			using var p = _profiler.Start(command);
 			using var cnn = GetConnection(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			var retParam = SetParametersFrom(cmd, element);
 			cmd.ExecuteNonQuery();
@@ -58,7 +60,7 @@ namespace A2v10.Data
 		{
 			using var token = _profiler.Start(command);
 			using var cnn = await GetConnectionAsync(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			var retParam = SetParametersFrom(cmd, element);
 			await cmd.ExecuteNonQueryAsync();
@@ -69,7 +71,7 @@ namespace A2v10.Data
 		{
 			using var token = _profiler.Start(command);
 			using var cnn = await GetConnectionAsync(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			var retParam = SetParametersFromExpandoObject(cmd, element);
 			await cmd.ExecuteNonQueryAsync();
@@ -80,7 +82,7 @@ namespace A2v10.Data
 		{
 			using var p = _profiler.Start(command);
 			using var cnn = await GetConnectionAsync(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			var retParam = SetParametersFromExpandoObject(cmd, prms);
 			using (var rdr = await cmd.ExecuteReaderAsync())
@@ -104,7 +106,7 @@ namespace A2v10.Data
 			TOut outValue = null;
 			using var p = _profiler.Start(command);
 			using var cnn = GetConnection(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			var retParam = SetParametersFrom(cmd, element);
 			using (var rdr = cmd.ExecuteReader())
@@ -124,7 +126,7 @@ namespace A2v10.Data
 
 			using var token = _profiler.Start(command);
 			using var cnn = await GetConnectionAsync(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			var retParam = SetParametersFrom(cmd, element);
 			using (var rdr = await cmd.ExecuteReaderAsync())
@@ -163,7 +165,7 @@ namespace A2v10.Data
 		{
 			using var token = _profiler.Start(command);
 			using var cnn = GetConnection(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			var helper = new LoadHelper<T>();
 			SqlExtensions.SetFromDynamic(cmd.Parameters, prms);
@@ -182,7 +184,7 @@ namespace A2v10.Data
 		{
 			using var token = _profiler.Start(command);
 			using var cnn = await GetConnectionAsync(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			var helper = new LoadHelper<T>();
 			SqlExtensions.SetFromDynamic(cmd.Parameters, prms);
@@ -202,7 +204,7 @@ namespace A2v10.Data
 			using var token = _profiler.Start(command);
 			var listLoader = new ListLoader<T>();
 			using var cnn = GetConnection(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			SqlExtensions.SetFromDynamic(cmd.Parameters, prms);
 			using (var rdr = cmd.ExecuteReader())
@@ -221,7 +223,7 @@ namespace A2v10.Data
 			using var token = _profiler.Start(command);
 			var listLoader = new ListLoader<T>();
 			using var cnn = await GetConnectionAsync(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 			SqlExtensions.SetFromDynamic(cmd.Parameters, prms);
 			using (var rdr = await cmd.ExecuteReaderAsync())
 			{
@@ -261,7 +263,7 @@ namespace A2v10.Data
 			return source;
 		}
 
-		public IDataModel LoadModel(String source, String command, System.Object prms = null, Int32 commandTimeout = 0)
+		public IDataModel LoadModel(String source, String command, System.Object prms = null)
 		{
 			var modelReader = new DataModelReader(_localizer);
 			source = ResolveSource(source, prms);
@@ -278,14 +280,12 @@ namespace A2v10.Data
 				(no, rdr) =>
 				{
 					modelReader.ProcessOneMetadata(rdr);
-				},
-
-				commandTimeout:commandTimeout);
+				});
 			modelReader.PostProcess();
 			return modelReader.DataModel;
 		}
 
-		public async Task<IDataModel> LoadModelAsync(String source, String command, Object prms = null, Int32 commandTimeout = 0)
+		public async Task<IDataModel> LoadModelAsync(String source, String command, Object prms = null)
 		{
 			var modelReader = new DataModelReader(_localizer);
 			source = ResolveSource(source, prms);
@@ -302,8 +302,7 @@ namespace A2v10.Data
 				(no, rdr) =>
 				{
 					modelReader.ProcessOneMetadata(rdr);
-				},
-				commandTimeout:commandTimeout);
+				});
 			modelReader.PostProcess();
 			return modelReader.DataModel;
 		}
@@ -312,7 +311,7 @@ namespace A2v10.Data
 		{
 			using var token = _profiler.Start(command);
 			using var cnn = GetConnection(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 			SqlCommandBuilder.DeriveParameters(cmd);
 			var retParam = SetParametersWithList<T>(cmd, prms, list);
 			cmd.ExecuteNonQuery();
@@ -323,7 +322,7 @@ namespace A2v10.Data
 		{
 			using var token = _profiler.Start(command);
 			using var cnn = await GetConnectionAsync(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			SqlCommandBuilder.DeriveParameters(cmd);
 			var retParam = SetParametersWithList<T>(cmd, prms, list);
@@ -339,7 +338,7 @@ namespace A2v10.Data
 			using var token = _profiler.Start(command);
 			var metadataCommand = command.Update2Metadata();
 			using var cnn = GetConnection(source);
-			using (var cmd = cnn.CreateCommandSP(metadataCommand))
+			using (var cmd = cnn.CreateCommandSP(metadataCommand, CommandTimeout))
 			{
 				using var rdr = cmd.ExecuteReader();
 				do
@@ -348,7 +347,7 @@ namespace A2v10.Data
 				}
 				while (rdr.NextResult());
 			}
-			using (var cmd = cnn.CreateCommandSP(command))
+			using (var cmd = cnn.CreateCommandSP(command, CommandTimeout))
 			{
 				SqlCommandBuilder.DeriveParameters(cmd);
 				dataWriter.SetTableParameters(cmd, data, prms);
@@ -377,7 +376,7 @@ namespace A2v10.Data
 			var metadataCommand = command.Update2Metadata();
 			using var cnn = await GetConnectionAsync(source);
 
-			using (var cmd = cnn.CreateCommandSP(metadataCommand))
+			using (var cmd = cnn.CreateCommandSP(metadataCommand, CommandTimeout))
 			{
 				using var rdr = await cmd.ExecuteReaderAsync();
 				do
@@ -389,7 +388,7 @@ namespace A2v10.Data
 			if (onSetData != null)
 				data = onSetData(dataWriter.GetTableDescription());
 
-			using (var cmd = cnn.CreateCommandSP(command))
+			using (var cmd = cnn.CreateCommandSP(command, CommandTimeout))
 			{
 				SqlCommandBuilder.DeriveParameters(cmd);
 				dataWriter.SetTableParameters(cmd, data, prms);
@@ -500,14 +499,11 @@ namespace A2v10.Data
 		async Task ReadDataAsync(String source, String command,
 			Action<SqlParameterCollection> setParams,
 			Action<Int32, IDataReader> onRead,
-			Action<Int32, IDataReader> onMetadata, 
-			Int32 commandTimeout = 0)
+			Action<Int32, IDataReader> onMetadata)
 		{
 			Int32 rdrNo = 0;
 			using var cnn = await GetConnectionAsync(source);
-			using var cmd = cnn.CreateCommandSP(command);
-			if (commandTimeout != 0)
-				cmd.CommandTimeout = commandTimeout;
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 			setParams?.Invoke(cmd.Parameters);
 
 			using var rdr = await cmd.ExecuteReaderAsync();
@@ -525,15 +521,12 @@ namespace A2v10.Data
 		void ReadData(String source, String command,
 			Action<SqlParameterCollection> setParams,
 			Action<Int32, IDataReader> onRead,
-			Action<Int32, IDataReader> onMetadata,
-			Int32 commandTimeout)
+			Action<Int32, IDataReader> onMetadata)
 		{
 			using var cnn = GetConnection(source);
-			using var cmd = cnn.CreateCommandSP(command);
+			using var cmd = cnn.CreateCommandSP(command, CommandTimeout);
 
 			Int32 rdrNo = 0;
-			if (commandTimeout != 0)
-				cmd.CommandTimeout = commandTimeout;
 			setParams?.Invoke(cmd.Parameters);
 			using var rdr = cmd.ExecuteReader();
 			do

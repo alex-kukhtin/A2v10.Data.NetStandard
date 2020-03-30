@@ -7,5 +7,6 @@ namespace A2v10.Data.Interfaces
 	public interface IDataConfiguration
 	{
 		String ConnectionString(String source);
+		Int32 CommandTimeout { get; }
 	}
 }

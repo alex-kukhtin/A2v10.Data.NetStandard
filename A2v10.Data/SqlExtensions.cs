@@ -14,11 +14,13 @@ namespace A2v10.Data
 	public static class SqlExtensions
 	{
 		[SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-		public static SqlCommand CreateCommandSP(this SqlConnection cnn, String command)
+		public static SqlCommand CreateCommandSP(this SqlConnection cnn, String command, Int32 commandTimeout)
 		{
 			var cmd = cnn.CreateCommand();
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.CommandText = command;
+			if (commandTimeout != 0)
+				cmd.CommandTimeout = commandTimeout;
 			return cmd;
 		}
 
