@@ -77,6 +77,8 @@ namespace A2v10.Data
 				var str = value.ToString();
 				if (String.IsNullOrEmpty(str))
 					return DBNull.Value;
+				if (to == typeof(Guid))
+					return Guid.Parse(value.ToString());
 				return value;
 			}
 			else

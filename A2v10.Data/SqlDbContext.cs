@@ -429,6 +429,7 @@ namespace A2v10.Data
 				{
 					var sqlParam = sqlParams[paramName];
 					var sqlVal = kv.Value;
+
 					if (sqlParam.SqlDbType == SqlDbType.VarBinary)
 					{
 						if (!(sqlVal is Stream stream))
@@ -463,6 +464,7 @@ namespace A2v10.Data
 				{
 					var sqlParam = sqlParams[paramName];
 					var sqlVal = p.GetValue(element);
+
 					if (sqlParam.SqlDbType == SqlDbType.VarBinary)
 					{
 						if (!(sqlVal is Stream stream))
