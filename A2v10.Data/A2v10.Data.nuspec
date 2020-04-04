@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>A2v10.Data</id>
+		<version>10.0.7234</version>
+		<title>A2v10.Data</title>
+		<authors>AlexKukhtin</authors>
+		<owners>AlexKukhtin</owners>
+		<projectUrl>https://github.com/alex-kukhtin/A2v10.Data.NetStandard</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>A2v10 Data Layer</description>
+		<releaseNotes>Current NUGET release</releaseNotes>
+		<copyright>Copyright © 2015-2020 Alex Kukhtin.</copyright>
+		<tags>A2v10 Platform Business WebApp</tags>
+		<references>
+			<reference file="A2v10.Data" />
+			<reference file="A2v10.Data.Interfaces" />
+		</references>
+	</metadata>
+</package>

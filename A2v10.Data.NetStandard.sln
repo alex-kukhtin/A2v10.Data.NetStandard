@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A2v10.Data", "A2v10.Data\A2v10.Data.csproj", "{B8E76B52-2A53-404E-AA74-423A0AD173EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "A2v10.Data", "A2v10.Data\A2v10.Data.csproj", "{B8E76B52-2A53-404E-AA74-423A0AD173EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A2v10.Data.Interfaces", "A2v10.Data.Interfaces\A2v10.Data.Interfaces.csproj", "{53E38F0A-D93A-4190-9339-128658D02A7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "A2v10.Data.Interfaces", "A2v10.Data.Interfaces\A2v10.Data.Interfaces.csproj", "{53E38F0A-D93A-4190-9339-128658D02A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A2v10.Data.Tests", "A2v10.Data.Tests\A2v10.Data.Tests.csproj", "{BFE5487F-CC14-4BD2-8DA6-F9A89641AD9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "A2v10.Data.Tests", "A2v10.Data.Tests\A2v10.Data.Tests.csproj", "{BFE5487F-CC14-4BD2-8DA6-F9A89641AD9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8955D05C-047B-494D-8035-5E605C3F972E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
